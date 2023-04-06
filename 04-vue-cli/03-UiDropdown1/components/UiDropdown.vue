@@ -11,6 +11,10 @@
         {{ option.text }}
       </button>
     </div>
+
+    <select class="dropdown__select" :value="modelValue" @change="handleOptionClick">
+      <option v-for="option in options" :key="option"  :value="option.value">{{option.text}}</option>
+    </select>
   </div>
 </template>
 
@@ -197,5 +201,13 @@ export default {
   top: 50%;
   left: 16px;
   transform: translate(0, -50%);
+}
+
+.dropdown__select {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  outline: none;
 }
 </style>
