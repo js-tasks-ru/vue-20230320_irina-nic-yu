@@ -158,7 +158,7 @@ export default {
         }
       }
 
-      return nextMonthArray
+      return nextMonthArray;
     },
 
     handleGoPrevious() {
