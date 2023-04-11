@@ -1,34 +1,44 @@
 <template>
   <div class="toasts">
-    <ToastsList v-if="currentToasts.length" :toasts="currentToasts"/>
+    <template v-if="currentToasts.length">
+      <UiToast
+        v-for="(toast, index) in currentToasts"
+        :key="index"
+        :message="toast.message"
+        :icon="toast.icon"
+        :type="toast.type"
+      />
+    </template>
   </div>
 </template>
 
 <script>
 import { v4 as uuid} from 'uuid';
-import ToastsList from "./ToastsList.vue";
+
+import UiToast from "./UiToast.vue";
+
+const availableToasts = {
+  success: {
+    type: 'success',
+    timeout: 5000,
+    class: 'toast_success',
+    icon: 'check-circle',
+  },
+  error: {
+    type: 'error',
+    timeout: 5000,
+    class: 'toast_error',
+    icon: 'alert-circle',
+  },
+};
 
 export default {
   name: 'TheToaster',
 
-  components: { ToastsList },
+  components: { UiToast },
 
   data() {
     return {
-      availableToasts: {
-        success: {
-          type: 'success',
-          timeout: 5000,
-          class: 'toast_success',
-          icon: 'check-circle',
-        },
-        error: {
-          type: 'error',
-          timeout: 5000,
-          class: 'toast_error',
-          icon: 'alert-circle',
-        },
-      },
       currentToasts: [],
     };
   },
@@ -44,7 +54,7 @@ export default {
 
     addToast(type, message) {
       const newToast = {
-        ...this.availableToasts[type],
+        ...availableToasts[type],
         id: uuid(),
         message,
       };

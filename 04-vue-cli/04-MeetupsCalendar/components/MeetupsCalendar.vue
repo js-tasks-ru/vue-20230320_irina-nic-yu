@@ -19,7 +19,13 @@
     </div>
 
     <div class="calendar-view__grid">
-      <CalendarDay v-for="(item, index) in calendarsItems" :key="index" :day="item" :currentMonth="currentMonth" :meetups="currentMeetups" />
+      <CalendarDay
+        v-for="(item, index) in calendarsItems"
+        :key="index"
+        :day="item"
+        :currentMonth="currentMonth"
+        :meetups="currentMeetupsForDay(item.date)"
+      />
     </div>
   </div>
 </template>
@@ -92,7 +98,7 @@ export default {
       return this.lastMonthDays.concat(this.currentMonthDays, this.nextMonthDays);
     },
 
-    currentMeetups() {
+    currentMeetupsForMonth() {
       return this.meetups.filter(meetup => new Date(meetup.date).getMonth() === this.currentMonth);
     },
   },
@@ -168,6 +174,10 @@ export default {
     handleGoNext() {
       this.date = new Date(this.date.getFullYear(), this.currentMonth + 1, 1);
     },
+
+    currentMeetupsForDay(date) {
+      return this.currentMeetupsForMonth.filter(meetup => new Date(meetup.date).getDate() === date);
+    }
   },
 };
 </script>

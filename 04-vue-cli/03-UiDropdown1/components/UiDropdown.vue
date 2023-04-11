@@ -1,12 +1,12 @@
 <template>
-  <div class="dropdown" :class="dropDownToggleOpened">
-    <button type="button" class="dropdown__toggle" :class="dropDownToggleIcon" @click="handleToggleClick">
+  <div class="dropdown" :class="{ 'dropdown_opened': openDropdown }">
+    <button type="button" class="dropdown__toggle" :class="{ 'dropdown__toggle_icon': hasIcons }" @click="handleToggleClick">
       <UiIcon v-if="selectedOptionIcon" :icon="selectedOptionIcon" class="dropdown__icon" />
-      <span>{{ selectedOptionTitle || title}}</span>
+      <span>{{ selectedOptionTitle || title }}</span>
     </button>
 
     <div v-show="openDropdown" class="dropdown__menu" role="listbox">
-      <button v-for="option in options" :key="option" class="dropdown__item" :class="dropDownItemIcon" role="option" type="button" :value="option.value" @click="handleOptionClick">
+      <button v-for="option in options" :key="option" class="dropdown__item" :class="{ 'dropdown__item_icon': hasIcons }" role="option" type="button" :value="option.value" @click="handleOptionClick">
         <UiIcon v-if="option.icon" :icon="option.icon" class="dropdown__icon" />
         {{ option.text }}
       </button>
@@ -64,23 +64,15 @@ export default {
     hasIcons() {
       return this.options.some(option => option.icon);
     },
-
-    dropDownToggleOpened() {
-      return ({'dropdown_opened': this.openDropdown,})
-    },
-
-    dropDownToggleIcon() {
-      return ({ 'dropdown__toggle_icon': this.hasIcons });
-    },
-
-    dropDownItemIcon() {
-      return ({ 'dropdown__item_icon': this.hasIcons });
-    },
   },
 
   methods: {
     handleToggleClick() {
-      this.openDropdown ? this.openDropdown = false : this.openDropdown = true;
+      if(this.openDropdown) {
+        this.openDropdown = false;
+      } else {
+        this.openDropdown = true;
+      }
     },
 
     handleOptionClick(e) {

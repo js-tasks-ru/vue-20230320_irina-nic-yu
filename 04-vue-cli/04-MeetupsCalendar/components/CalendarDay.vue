@@ -1,9 +1,9 @@
 <template>
     <div class="calendar-view__cell" :class="inactiveCell" tabindex="0">
       <div class="calendar-view__cell-day">{{ day.date }}</div>
-      <div v-if="currentMeetups.length" class="calendar-view__cell-content">
+      <div v-if="meetups.length" class="calendar-view__cell-content">
           <a
-            v-for="meetup in currentMeetups"
+            v-for="meetup in meetups"
             :key="meetup.id" href="/meetups/1"
             class="calendar-event"
           >
@@ -31,7 +31,7 @@ export default {
 
     meetups: {
       type: Array,
-      default: () => [],
+      required: true,
     }
   },
 
@@ -44,10 +44,6 @@ export default {
       return ({
         'calendar-view__cell_inactive': !this.isCurrentMonthDay,
       });
-    },
-
-    currentMeetups() {
-      return this.meetups.filter(meetup => new Date(meetup.date).getDate() === this.day.date);
     },
   },
 }
