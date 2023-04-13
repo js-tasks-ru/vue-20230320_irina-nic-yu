@@ -9,6 +9,7 @@ const router = createRouter({
       alias: '/meetups',
       component: () => import('../views/PageMeetups.vue'),
       name: 'main',
+
     },
     {
       path: '/login',
@@ -17,6 +18,7 @@ const router = createRouter({
       },
       component: () => import('../views/PageLogin.vue'),
       name: 'login',
+
     },
     {
       path: '/register',
@@ -24,6 +26,7 @@ const router = createRouter({
         requireGuest: true,
       },
       component: () => import('../views/PageRegister.vue'),
+      name: 'register',
     },
     {
       path: '/meetups/create',
@@ -31,6 +34,7 @@ const router = createRouter({
         requireAuth: true,
       },
       component: () => import('../views/PageCreateMeetup.vue'),
+      name: 'createMeetup',
     },
     {
       path: '/meetups/:meetupId(\\d+)/edit',
@@ -38,6 +42,7 @@ const router = createRouter({
         requireAuth: true,
       },
       component: () => import('../views/PageEditMeetup.vue'),
+      name: 'editMeetup',
     },
   ],
 });
